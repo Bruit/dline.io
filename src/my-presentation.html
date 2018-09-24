@@ -1,1 +1,26 @@
-<html><head><link rel="import" href="../bower_components/polymer/polymer-element.html"></head><body><dom-module id="my-presentation"><template><style>:host{display:block;padding:16px;}</style><h1>New view</h1></template><script>var MyPresentaion=function(_Polymer$Element){babelHelpers.inherits(MyPresentaion,_Polymer$Element);function MyPresentaion(){babelHelpers.classCallCheck(this,MyPresentaion);return babelHelpers.possibleConstructorReturn(this,(MyPresentaion.__proto__||Object.getPrototypeOf(MyPresentaion)).apply(this,arguments))}babelHelpers.createClass(MyPresentaion,null,[{key:"is",get:function get(){return"my-presentation"}}]);return MyPresentaion}(Polymer.Element);customElements.define(MyPresentation.is,MyPresentation);</script></dom-module></body></html>
+<!-- Load the Polymer.Element base class --><link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-presentation">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        padding: 16px;
+      }
+    </style>
+
+    <h1>New view</h1>
+  </template>
+  <script>// Your new element extends the Polymer.Element base class
+class MyPresentaion extends Polymer.Element {
+  static get is() {
+    return 'my-presentation';
+  }
+
+} //Now, register your new custom element so the browser can use it
+
+
+customElements.define(MyPresentation.is, MyPresentation);</script>
+</dom-module>

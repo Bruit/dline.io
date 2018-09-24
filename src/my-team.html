@@ -1,1 +1,146 @@
-<html><head></head><body><div hidden="" by-polymer-bundler=""><link rel="import" href="elements/people-preview-card.html"><link rel="import" href="my-icons.html"><link rel="import" href="style/shared-styles.html"></div><dom-module id="my-team"><template><style include="shared-styles"></style><app-drawer-layout fullbleed=""><app-drawer slot="drawer"><div style="height:100% ; overflow-x:hidden ; overflow-y:auto;"><a href="home/"><div class="welcome"></div></a><div style="width:100%"><paper-listbox selected="all" attr-for-selected="label"><paper-item label="all">Team ([[peoples.length]] peoples)</paper-item></paper-listbox></div></div></app-drawer><app-header-layout has-scrolling-region=""><app-header slot="header" condenses="" reveals="" effects="waterfall"><app-toolbar><paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button><div main-title="">DLine Team</div><div class="emailTest"><div>{{user.email}}</div><a href="home/"><paper-icon-button icon="home"></paper-icon-button></a></div></app-toolbar></app-header><div class="container"><div style="width:100%"><h1>Team presentation</h1></div><template is="dom-repeat" items="{{peoples}}" as="people"><people-preview-card people-preview="[[people]]"></people-preview-card></template></div></app-header-layout></app-drawer-layout></template><script>var MyTeam=function(_Polymer$Element){babelHelpers.inherits(MyTeam,_Polymer$Element);babelHelpers.createClass(MyTeam,null,[{key:"is",get:function get(){return"my-team"}}]);function MyTeam(){var _this;babelHelpers.classCallCheck(this,MyTeam);_this=babelHelpers.possibleConstructorReturn(this,(MyTeam.__proto__||Object.getPrototypeOf(MyTeam)).call(this));_this.peoples=[];_this.push("peoples",{name:"Maxime Gobeli",status:"MD",email:"maxime.gobeli@gmail.com",adress:{place:"CHU Haut Lev\xEAque - Radiation department",town:"33000 Bordeaux",country:"France"},image:"https://dl.dropbox.com/s/80zdif4kuknbm0u/8bitMax.jpg",linkedin:"https://www.linkedin.com/in/maxime-gobeli-293305107/"});_this.push("peoples",{name:"Luc LAFITTE",status:"IT",email:"luclafitte@gmail.com",adress:{place:"Bordeaux Mathematical Institut",town:"33400 Talence",country:"France"},image:"https://dl.dropbox.com/s/ygfpw1nyxd39fak/8bitLuc.jpg",linkedin:"https://fr.linkedin.com/in/luc-lafitte-40a73167/"});console.log(_this.peoples);return _this}return MyTeam}(Polymer.Element);customElements.define(MyTeam.is,MyTeam);</script></dom-module></body></html>
+<!-- Load the Polymer.Element base class --><link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-contact/paper-contact.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+
+<link rel="import" href="elements/people-preview-card.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="style/shared-styles.html">
+
+<dom-module id="my-team">
+    <template>
+
+    <!-- STYLE -->
+
+    <style include="shared-styles">
+
+    </style>
+
+    <!-- STYLE END -->
+
+    <!-- DATABASE -->
+    <!-- DATABASE END -->
+
+    <app-drawer-layout fullbleed="">
+        
+        <!-- LEFT SIDEBAR  -->
+
+        <app-drawer slot="drawer">
+            
+            <div style="height:100% ; overflow-x:hidden ; overflow-y:auto ; ">
+                <a href="home/">
+                    <div class="welcome"></div>
+                </a>
+                <div style="width:100%">
+                    <paper-listbox selected="all" attr-for-selected="label">
+                        <paper-item label="all">Team ([[peoples.length]] peoples)</paper-item>                  
+                    </paper-listbox>
+                </div>
+            </div>
+
+        </app-drawer>
+
+    <!-- LEFT SIDEBAR END -->
+
+    <app-header-layout has-scrolling-region="">
+
+        <!-- TOP BAR -->
+
+        <app-header slot="header" condenses="" reveals="" effects="waterfall">
+
+            <app-toolbar>
+                <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
+                <div main-title="">DLine Team</div>
+                <div class="emailTest">
+                    <div>{{user.email}}</div>
+                    <a href="home/">
+                        <paper-icon-button icon="home"></paper-icon-button>
+                    </a>
+                </div>
+            </app-toolbar>
+
+        </app-header>
+
+        <!-- TOP BAR END -->
+
+        <!-- PAGE CONTENT -->
+        
+        <div class="container">
+        
+            <div style="width:100%">
+                <h1>Team presentation</h1>
+            </div>
+            
+            <template is="dom-repeat" items="{{peoples}}" as="people">
+                
+                <people-preview-card people-preview="[[people]]"></people-preview-card>
+                
+            </template>
+
+    </div>
+
+    <!-- PAGE CONTENT END -->
+
+    </app-header-layout>
+
+    </app-drawer-layout>
+
+    </template>
+
+    <script>// Your new element extends the Polymer.Element base class
+class MyTeam extends Polymer.Element {
+  static get is() {
+    return 'my-team';
+  }
+
+  constructor() {
+    super();
+    this.peoples = [];
+    this.push('peoples', {
+      name: "Maxime Gobeli",
+      status: "MD",
+      email: "maxime.gobeli@gmail.com",
+      adress: {
+        place: "CHU Haut Levêque - Radiation department",
+        town: "33000 Bordeaux",
+        country: "France"
+      },
+      image: "https://dl.dropbox.com/s/80zdif4kuknbm0u/8bitMax.jpg",
+      linkedin: "https://www.linkedin.com/in/maxime-gobeli-293305107/"
+    });
+    this.push('peoples', {
+      name: "Luc LAFITTE",
+      status: "IT",
+      email: "luclafitte@gmail.com",
+      adress: {
+        place: "Bordeaux Mathematical Institut",
+        town: "33400 Talence",
+        country: "France"
+      },
+      image: "https://dl.dropbox.com/s/ygfpw1nyxd39fak/8bitLuc.jpg",
+      linkedin: "https://fr.linkedin.com/in/luc-lafitte-40a73167/"
+    });
+    console.log(this.peoples);
+  }
+
+}
+
+customElements.define(MyTeam.is, MyTeam);</script>
+</dom-module>
