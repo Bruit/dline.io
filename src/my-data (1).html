@@ -1,4 +1,27 @@
-<div hidden="" by-polymer-bundler=""><link rel="import" href="my-icons.html"><link rel="import" href="style/shared-styles.html"></div><dom-module id="my-data">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="style/shared-styles.html">
+
+<dom-module id="my-data">
     <template>
 
     <!-- STYLE -->
@@ -28,9 +51,7 @@
         <app-drawer slot="drawer">
 
             <div style="height:100% ; overflow-x:hidden ; overflow-y:auto ; ">
-                <a href="home/">
-                    <div class="welcome"></div>
-                </a>
+                <div class="welcome"></div>
                 <div style="width:100%">
                     <paper-listbox>
 
@@ -46,13 +67,12 @@
                         </a>
                         </template>
 
-    <div class="separator"><span>Chapters<span></span></span></div>
+                        <div class="separator"><span>Chapters<span></span></span></div>
 
-                        <paper-item class="link" href="#anchorHdm" on-tap="_onTapAnchor">History</paper-item>
-                        <paper-item class="link" href="#anchorEc" on-tap="_onTapAnchor">Examination</paper-item>
-                        <paper-item class="link" href="#anchorInv" on-tap="_onTapAnchor">Investigation </paper-item>
-                        <paper-item class="link" href="#anchorTdm" on-tap="_onTapAnchor">Treatment </paper-item>
-                        <paper-item class="link" href="#anchorRef" on-tap="_onTapAnchor">References </paper-item>
+                        <paper-item class="link" href="#anchorEc" on-tap="_onTapAnchor">Examen clinique</paper-item>
+                        <paper-item class="link" href="#anchorTdm" on-tap="_onTapAnchor">Examens complémentaires</paper-item>
+                        <paper-item class="link" href="#anchorTdm" on-tap="_onTapAnchor">Traitement </paper-item>
+                        <paper-item class="link" href="#anchorTdm" on-tap="_onTapAnchor">Bibliographie </paper-item>
 
                     </paper-listbox>
                 </div>
@@ -89,38 +109,25 @@
 
                 <div style="width:100%">
                     <div class="infos">
-                        <div class="card" id="anchorHdm">
+                        <div class="card">
                             <div class="description">
-                                <h1> History </h1>
-                                <p id="hdm"></p><p>
+                                <h1> Histoire de la maladie </h1>
+                                <p id="hdm">
+                                    </p><p>
                             </p></div>
                         </div>
                         <div class="card" id="anchorEc">
-                            <h1> Examination </h1>
+                            <h1> Examen clinique </h1>
                             <div class="description">
                                 <p id="ec"></p>
                             </div>
                         </div>
-                        <div class="card" id="anchorInv">
-                            <h1> Investigation </h1>
+                        <div class="card" id="anchorTdm">
+                            <h1> Examens complémentaires </h1>
                             <div class="description">
-                                <p id="inv"></p>
+                                <p id="tdm"></p>
                             </div>
                         </div>
-                        <div class="card" id="anchorTdm">
-                                <h1> Treatment </h1>
-                                <div class="description">
-                                    <p id="tdm"></p>
-                                </div>
-                            </div>
-
-                        <div class="card" id="anchorRef">
-                                <h1> References </h1>
-                                <div class="description">
-                                    <p id="ref"></p>
-                                </div>
-                            </div>
-
                     </div>
                 </div>
                 
@@ -171,19 +178,18 @@ class MyData extends Polymer.Element {
   _descriptionDisplay(userCase) {
     // The item description contains escaped HTML (e.g. "&lt;br&gt;"), so we need to
     // unescape it ("<br>") and set it as innerHTML.
-    this.$.hdm.innerHTML = this._unescapeText(userCase, 'hdm');
-    this.$.ec.innerHTML = this._unescapeText(userCase, 'ec');
-    this.$.inv.innerHTML = this._unescapeText(userCase, 'inv');
-    this.$.tdm.innerHTML = this._unescapeText(userCase, 'tdm');
-    this.$.ref.innerHTML = this._unescapeText(userCase, 'ref');
+    var text = userCase ? userCase.descriptiondata.hdm : '';
+    this.$.hdm.innerHTML = this._unescapeText(text); // Reset the select menus.
+
+    var text = userCase ? userCase.descriptiondata.tdm : '';
+    this.$.tdm.innerHTML = this._unescapeText(text);
+    var text = userCase ? userCase.descriptiondata.ec : '';
+    this.$.ec.innerHTML = this._unescapeText(text);
   }
 
-  _unescapeText(userCase, elt) {
-    if (userCase === undefined) return '';
-    if (userCase.descriptiondata == undefined) return '';
-    if (userCase.descriptiondata[elt] == undefined) return '';
+  _unescapeText(text) {
     let elem = document.createElement('textarea');
-    elem.innerHTML = userCase.descriptiondata[elt];
+    elem.innerHTML = text;
     return elem.textContent;
   }
 

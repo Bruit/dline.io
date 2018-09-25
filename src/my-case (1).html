@@ -6,77 +6,39 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><div hidden="" by-polymer-bundler=""><link rel="import" href="elements/ami-viewer-2D.html"><link rel="import" href="elements/contours-list-item.html"><link rel="import" href="my-icons.html"><link rel="import" href="style/viewers-style.html"></div><dom-module id="my-case">
+--><link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+
+<link rel="import" href="elements/ami-viewer-2D.html">
+<link rel="import" href="elements/contours-list-item.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="style/viewers-style.html">
+
+<dom-module id="my-case">
 
     <template>
 
     <!-- STYLE -->
 
     <style include="viewers-style">
-
-        .buttons-list-3d {
-            height: 24px;
-            padding: 0;
-            font-size: 12px;
-            color: #d9d9d9;
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            z-index: 1;
-            cursor: default;
-            font-weight: lighter;
-        }
-
-        .buttons-list-3d .button-3d {
-            width: 40px;
-            height: 40px;
-            background-color: var(--dark-primary-color);
-            color: var(--text-primary-color);
-        }
-
-        #modalControls {
-            width: 350px;
-        }
-
-        #modalControls > h2 {
-            padding: 5px 30px;
-        }
-
-        #modalControls > p {
-            padding: 5px 30px;
-            margin: 0;
-        }
-
-        #modalControls .kbd {
-            padding: 0.1em 0.6em;
-            border: 1px solid #ccc;
-            font-size: 11px;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
-            -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
-            box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #ffffff inset;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-            border-radius: 3px;
-            display: inline-block;
-            margin: 0 0.1em;
-            text-shadow: 0 1px 0 #fff;
-            line-height: 1.4;
-            white-space: nowrap;
-        }
-
-        #modalControls .esc {
-            font-size: 11px;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #333;
-            display: inline-block;
-            text-shadow: 0 1px 0 #fff;
-            line-height: 1.4;
-            white-space: nowrap;
-        }
-
     </style>
 
     <!-- STYLE END -->
@@ -92,9 +54,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <firebase-query id="FBSave" path="/users/[[user.uid]]/cases">
     </firebase-query>
 
-    <firebase-query id="FBUser" path="/users/[[user.uid]]" data="{{userToto}}">
-    </firebase-query>
-
     <!-- DATABASE END -->
 
     <app-drawer-layout fullbleed="">
@@ -104,9 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-drawer slot="drawer" hidden="[[loadingData]]">
 
             <div style="height:100% ; overflow-x:hidden ; overflow-y:auto ;">
-                <a href="home/">
-                    <div class="welcome"></div>
-                </a>
+                <div class="welcome"></div>
                 <div style="width:100%">
                     <paper-listbox selected="{{filter}}" attr-for-selected="label" selectable=".label">
                         
@@ -175,17 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <div id="mainmain" class="main">
 
-                <div class="advanced buttons-list-3d">
-                    <paper-icon-button icon="icons:touch-app" class="button-3d" on-tap="toggleControlModal"></paper-icon-button>
-                </div>
-
                 <div class="advanced fulloff">
-
                     <div class="controls only-for-small">
                         <span class="label">Image preview</span>
                         <paper-icon-button icon="my-icons:expand-more" target="p3p3" on-tap="toggleMenu" target-menu="collapseIP"></paper-icon-button>
                     </div>
-
                     <iron-collapse class="only-for-small" id="collapseIP" no-animation="">
                         <div>
                             Plane :
@@ -198,7 +149,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-dropdown-menu>
                         </div>
                     </iron-collapse>
-
                     <div class="controls">
                         <span class="label">Controls</span>
                         <paper-icon-button icon="my-icons:expand-more" target="p3p3" on-tap="toggleMenu" target-menu="collapse"></paper-icon-button>
@@ -265,39 +215,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </app-drawer-layout>
 
-    <paper-dialog id="modalControls">
-        <h2>List of control</h2>
-        <p>
-            </p><ul>
-                <li class="kbd">shift</li>
-                <li class="esc">+ mouse : Fusion</li>
-            </ul>
-            <ul>
-                <li class="kbd">↑</li>
-                <li class="kbd">↓</li>
-                <li class="esc">: Change slice</li>
-            </ul>
-            <ul>
-                <li class="esc"> Right click + mouse : Zoom-in </li>
-                <li class="esc">
-                    <iron-icon icon="icons:zoom-in"></iron-icon>
-                </li>
-                <li class="esc"> and zoom-out
-                    <iron-icon icon="icons:zoom-out"></iron-icon>
-                </li>
-            </ul>
-            <ul>
-                <li class="esc"> Left click + mouse : Grabe image </li>
-            </ul>
-            <ul>
-                <li class="esc"> Double click : Fly to the mouse location </li>
-            </ul>
-        <p></p>
-        <div class="buttons">
-            <paper-button dialog-confirm="" autofocus="">Close</paper-button>
-        </div>
-    </paper-dialog>
-
     </template>
 
     <script>class MyCase extends Polymer.Element {
@@ -307,10 +224,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   static get properties() {
     return {
-      userToto: {
-        type: Object,
-        observer: '_userTotoChanged'
-      },
       routeData: {
         type: Object,
         value: {}
@@ -454,10 +367,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   ready() {
     super.ready(); // renderers
-  }
-
-  _userTotoChanged(userToto) {
-    console.log(userToto);
   }
 
   _routePageChanged(routeData) {
@@ -652,28 +561,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       imageLoaded) {
         this.loadingData = false;
 
-        this._updateRenderers(); // update default zoom
-
-
-        if (this.userCase.image && this.userCase.image.zoom) {
-          if (this.userCase.image.zoom.axial) {
-            this.$.first._camera.zoom = this.userCase.image.zoom.axial;
-
-            this.$.first._camera.update();
-          }
-
-          if (this.userCase.image.zoom.coronal) {
-            this.$.second._camera.zoom = this.userCase.image.zoom.coronal;
-
-            this.$.second._camera.update();
-          }
-
-          if (this.userCase.image.zoom.sagittal) {
-            this.$.third._camera.zoom = this.userCase.image.zoom.sagittal;
-
-            this.$.third._camera.update();
-          }
-        }
+        this._updateRenderers();
       }
     }); // fetch meshes
     // push in mesh array
@@ -854,7 +742,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   _changeViewer(target) {
-    const mainContainer = this.$.mainmain.children[2];
+    const mainContainer = this.$.mainmain.children[1];
     const smallContainer = this.$[target].children[1];
     this.$.mainmain.appendChild(smallContainer);
     this.$[target].appendChild(mainContainer);
@@ -865,10 +753,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   toggleMenu(event) {
     let target = event.currentTarget.getAttribute('target-menu');
     this.$[target].toggle();
-  }
-
-  toggleControlModal(event) {
-    this.$.modalControls.open();
   }
 
   _updateRenderers() {

@@ -1,4 +1,34 @@
-<div hidden="" by-polymer-bundler=""><link rel="import" href="elements/case-preview-card.html"><link rel="import" href="my-icons.html"><link rel="import" href="style/shared-styles.html"></div><dom-module id="my-home">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+
+<link rel="import" href="elements/case-preview-card.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="style/shared-styles.html">
+
+<dom-module id="my-home">
     <template>
 
     <!-- STYLE -->
@@ -19,9 +49,6 @@
     <firebase-query id="FBSave" path="/users/[[user.uid]]/cases" data="{{casesDone}}">
     </firebase-query>
 
-    <firebase-query id="FBUser" path="/users/[[user.uid]]" data="{{userToto}}">
-    </firebase-query>
-
     <!-- DATABASE END -->
 
     <app-drawer-layout fullbleed="">
@@ -31,30 +58,19 @@
         <app-drawer slot="drawer">
 
             <div style="height:100% ; overflow-x:hidden ; overflow-y:auto ; ">
-                <a href="home/">
-                    <div class="welcome"></div>
-                </a>
+                <div class="welcome"></div>
                 <div style="width:100%">
                     <paper-listbox selected="{{filter}}" attr-for-selected="label" selectable=".label">
                         <paper-item label="all" class="label">All cases ([[allCases.length]])</paper-item>
                         <div class="separator"></div>
                         <template is="dom-repeat" items="{{tags}}" as="tag">
                             <paper-item label$="[[tag.value]]" class="label">[[tag.value]] ([[tag.count]])</paper-item>
-                        </template>                        
-                    </paper-listbox>
-                    <div class="separator"></div>
-                    <paper-listbox>
-                        <a href="team/">
-                            <paper-item class="label">
-                                <iron-icon icon="icons:perm-identity"></iron-icon>
-                                Team
-                            </paper-item>
-                        </a>
-                    </paper-listbox>
-                </div>
-            </div> 
+                        </template>
+    </paper-listbox>
+    </div>
+    </div>
 
-        </app-drawer>
+    </app-drawer>
 
     <!-- LEFT SIDEBAR END -->
 
@@ -85,7 +101,7 @@
 
                 <case-preview-card case-preview="[[mycase]]"></case-preview-card>
                 
-            </template>
+                </template>
 
         </div>
 
@@ -114,12 +130,8 @@
       },
       user: {
         type: Object,
-        value: {} // observer: '_userChanged',
-
-      },
-      userToto: {
-        type: Object,
-        observer: '_userTotoChanged'
+        value: {},
+        observer: '_userChanged'
       },
       userCases: {
         type: Array,
@@ -171,13 +183,7 @@
     console.log("my-home _userChanged : ", user);
   }
 
-  _userTotoChanged(userData) {
-    console.log("my-home _userTotoChanged : ", userData);
-  }
-
   _userCasesChanged(userCases) {
-    console.log("my-home _userCasesChanged : ", userCases);
-
     if (userCases === undefined) {
       return;
     }
